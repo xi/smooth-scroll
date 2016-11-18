@@ -41,23 +41,22 @@
   };
 
   var init = function() {
+    var scroll = function(selector) {
+      var scrollY = document.querySelector(selector).offsetTop;
+      smoothScrollTo(scrollY);
+    };
+
     var smoothScrollClick = function(event) {
       event.preventDefault();
 
       var selector = event.currentTarget.getAttribute('href');
-      var scrollY = document.querySelector(selector).offsetTop;
-
       history.pushState(null, null, selector);
-      smoothScrollTo(scrollY);
+      scroll(selector);
     };
 
     window.addEventListener('popstate', function(event) {
       event.preventDefault();
-
-      var selector = window.location.hash;
-      var scrollY = document.querySelector(selector).offsetTop;
-
-      smoothScrollTo(scrollY);
+      scroll(window.location.hash);
     });
 
     var links = document.querySelectorAll('[href^="#"]');
