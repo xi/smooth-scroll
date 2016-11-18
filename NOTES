@@ -1,0 +1,32 @@
+# important
+
+1.	no dependencies
+2.	reasonable compatibility
+3.	fixed header support
+4.	works on jump-links with minimal config (0-5 lines)
+5.	can be used from javascript
+6.	small
+7.	uses requestAnimationFrame
+8.	usable packaging
+9.	horizontal support
+10.	standards complient
+11.	active
+12.	supports containers other than full page
+13.	change direction mid-scroll
+14.	keeps history intact
+
+# prior art
+
+-	https://github.com/GabrielDelepine/smooth-scroll [1,2,~,4,X,6,X,8,X,X,~,X,?,14]
+	-	header support needs modification of source
+-	https://github.com/firstandthird/smooth-scroller [1,2,X,4,~,6,7,X,X,X,~,X,?,X]
+-	https://github.com/cferdinandi/smooth-scroll [1,2,3,4,5,6,X,8,X,X,~,X,?,X]
+	-	incomplete parsing of css selector in getClosest
+	-	supports many settings
+-	https://github.com/narikei/SmoothScrolling [1,2,X,X,5,6,X,8,9,X,X,X,?,X]
+-	https://github.com/bloodyowl/scroll
+-	https://github.com/iamdustan/smoothscroll [1,2,?,?,5,?,7,?,?,10,11,?,?,?]
+
+# reference
+
+-	https://drafts.csswg.org/cssom-view/#scrolling
