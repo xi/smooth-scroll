@@ -28,9 +28,9 @@
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
   };
 
-  var smoothScrollTo = function(endY, duration, easing) {
-    duration = duration || 400;
-    easing = easing || cubicInOut;
+  var smoothScrollTo = function(endY, options) {
+    var duration = (options || {}).duration || 400;
+    var easing = (options || {}).easing || cubicInOut;
 
     var startY = window.scrollY;
 
@@ -40,41 +40,40 @@
     }, duration);
   };
 
-  var init = function(headerSelector) {
-    var header = document.querySelector(headerSelector || '[data-scroll-header]');
+  var smoothScrollToSelector = function(selector, options) {
+    var headerSelector = (options || {}).headerSelector || '[data-scroll-header]';
+    var header = document.querySelector(headerSelector);
+    var scrollY = document.querySelector(selector).offsetTop;
+    if (header) scrollY -= header.getBoundingClientRect().height;
+    smoothScrollTo(scrollY, options);
+  };
 
-    var scroll = function(selector) {
-      var scrollY = document.querySelector(selector).offsetTop;
+  var init = function(options) {
+    var selector = (options || {}).selector || '[href^="#"]';
+    var links = document.querySelectorAll(selector);
 
-      if (header) {
-        scrollY -= header.getBoundingClientRect().height;
-      }
-
-      smoothScrollTo(scrollY);
-    };
+    window.addEventListener('popstate', function(event) {
+      event.preventDefault();
+      smoothScrollToSelector(window.location.hash, options);
+    });
 
     var smoothScrollClick = function(event) {
       event.preventDefault();
 
       var selector = event.currentTarget.getAttribute('href');
       history.pushState(null, null, selector);
-      scroll(selector);
+      smoothScrollToSelector(selector, options);
     };
 
-    window.addEventListener('popstate', function(event) {
-      event.preventDefault();
-      scroll(window.location.hash);
-    });
-
-    var links = document.querySelectorAll('[href^="#"]');
     for (var i = 0; i < links.length; i++) {
       links[i].addEventListener('click', smoothScrollClick);
-    };
+    }
   };
 
   return {
     animate: animate,
     smoothScrollTo: smoothScrollTo,
+    smoothScrollToSelector: smoothScrollToSelector,
     init: init,
   };
 });
