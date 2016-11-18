@@ -24,16 +24,15 @@
     window.requestAnimationFrame(step);
   };
 
-  var smoothScrollTo = function(endY, container, duration) {
-    container = container || window;
+  var smoothScrollTo = function(endY, duration) {
     duration = duration || 400;
 
-    var startY = container.scrollY;
+    var startY = window.scrollY;
 
     animate(function(progress) {
       // var f = Math.sin(Math.PI * (progress - 0.5)) / 2 + 0.5;
       var f = (3 - 2 * progress) * progress * progress;
-      container.scrollTo(0, startY * (1 - f) + endY * f);
+      window.scrollTo(0, startY * (1 - f) + endY * f);
     }, duration);
   };
 
