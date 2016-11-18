@@ -1,6 +1,4 @@
 -	fixed header support
--	packaging
--	use from javascript
 -	standards compliant
 -	change direction mid-scroll
 -	smooth scroll on history change (back button)
