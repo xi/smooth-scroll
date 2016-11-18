@@ -40,9 +40,16 @@
     }, duration);
   };
 
-  var init = function() {
+  var init = function(headerSelector) {
+    var header = document.querySelector(headerSelector || '[data-scroll-header]');
+
     var scroll = function(selector) {
       var scrollY = document.querySelector(selector).offsetTop;
+
+      if (header) {
+        scrollY -= header.getBoundingClientRect().height;
+      }
+
       smoothScrollTo(scrollY);
     };
 
