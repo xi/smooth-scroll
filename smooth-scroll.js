@@ -48,9 +48,10 @@
       smoothScrollTo(scrollY);
     };
 
-    document.querySelectorAll('[href^="#"]').forEach(function(el) {
-      el.addEventListener('click', smoothScrollClick);
-    });
+    var links = document.querySelectorAll('[href^="#"]');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', smoothScrollClick);
+    };
   };
 
   return {
