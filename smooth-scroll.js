@@ -28,15 +28,18 @@
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
   };
 
-  var smoothScrollTo = function(endY, options) {
+  var smoothScrollTo = function(endX, endY, options) {
     var duration = (options || {}).duration || 400;
     var easing = (options || {}).easing || cubicInOut;
 
+    var startX = window.scrollX;
     var startY = window.scrollY;
 
     animate(function(progress) {
       var f = easing(progress);
-      window.scrollTo(0, startY * (1 - f) + endY * f);
+      var x = typeof endX === 'number' ? startX * (1 - f) + endX * f : startX;
+      var y = typeof endY === 'number' ? startY * (1 - f) + endY * f : startY;
+      window.scrollTo(x, y);
     }, duration);
   };
 
@@ -45,7 +48,7 @@
     var header = document.querySelector(headerSelector);
     var scrollY = document.querySelector(selector).offsetTop;
     if (header) scrollY -= header.getBoundingClientRect().height;
-    smoothScrollTo(scrollY, options);
+    smoothScrollTo(null, scrollY, options);
   };
 
   var init = function(options) {
