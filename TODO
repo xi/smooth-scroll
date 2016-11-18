@@ -1,7 +1,6 @@
 -	fixed header support
 -	standards compliant
 -	change direction mid-scroll
--	smooth scroll on history change (back button)
 !	merge upstream
 
 # wontfix

@@ -48,6 +48,15 @@
       smoothScrollTo(scrollY);
     };
 
+    window.addEventListener('popstate', function(event) {
+      event.preventDefault();
+
+      var selector = window.location.hash;
+      var scrollY = document.querySelector(selector).offsetTop;
+
+      smoothScrollTo(scrollY);
+    });
+
     var links = document.querySelectorAll('[href^="#"]');
     for (var i = 0; i < links.length; i++) {
       links[i].addEventListener('click', smoothScrollClick);
