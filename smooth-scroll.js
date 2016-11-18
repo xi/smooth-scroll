@@ -13,14 +13,17 @@ var animate = function(apply, duration) {
   window.requestAnimationFrame(step);
 };
 
-var smoothScroll = function(endY) {
-  var startY = window.scrollY;
+var smoothScrollTo = function(endY, container, duration) {
+  container = container || window;
+  duration = duration || 250;
+
+  var startY = container.scrollY;
 
   animate(function(progress) {
     // var f = Math.sin(Math.PI * (progress - 0.5)) / 2 + 0.5;
     var f = (3 - 2 * progress) * progress * progress;
-    window.scrollTo(0, startY * (1 - f) + endY * f);
-  }, 250);
+    container.scrollTo(0, startY * (1 - f) + endY * f);
+  }, duration);
 };
 
 var smoothScrollClick = function(event) {
@@ -30,7 +33,7 @@ var smoothScrollClick = function(event) {
   var scrollY = document.querySelector(selector).offsetTop;
 
   history.pushState(null, null, selector);
-  smoothScroll(scrollY);
+  smoothScrollTo(scrollY);
 };
 
 document.querySelectorAll('[href^="#"]').forEach(function(el) {

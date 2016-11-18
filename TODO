@@ -3,7 +3,6 @@
 -	use from javascript
 -	horizontal scrolling
 -	standards compliant
--	other containers
 -	change direction mid-scroll
 -	smooth scroll on history change (back button)
 !	merge upstream
