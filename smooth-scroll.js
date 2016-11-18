@@ -26,7 +26,7 @@
 
   var smoothScrollTo = function(endY, container, duration) {
     container = container || window;
-    duration = duration || 250;
+    duration = duration || 400;
 
     var startY = container.scrollY;
 
