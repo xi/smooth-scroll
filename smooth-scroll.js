@@ -24,14 +24,18 @@
     window.requestAnimationFrame(step);
   };
 
-  var smoothScrollTo = function(endY, duration) {
+  var cubicInOut = function(t) {
+    return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  };
+
+  var smoothScrollTo = function(endY, duration, easing) {
     duration = duration || 400;
+    easing = easing || cubicInOut;
 
     var startY = window.scrollY;
 
     animate(function(progress) {
-      // var f = Math.sin(Math.PI * (progress - 0.5)) / 2 + 0.5;
-      var f = (3 - 2 * progress) * progress * progress;
+      var f = easing(progress);
       window.scrollTo(0, startY * (1 - f) + endY * f);
     }, duration);
   };
