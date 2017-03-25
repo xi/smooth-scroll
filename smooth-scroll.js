@@ -11,6 +11,21 @@
 })(function() {
   'use strict';
 
+  var closestMatch = function(el, selector, root) {
+    if (el && el !== root) {
+      return el.matches(selector) ? el : closestMatch(el.parentElement, selector, root);
+    }
+  };
+
+  var delegated = function(element, eventType, selector, handler) {
+    element.addEventListener(eventType, function(event) {
+      var target = closestMatch(event.target, selector, element);
+      if (target) {
+        handler(event, target);
+      }
+    });
+  };
+
   var animate = function(apply, duration) {
     var start = null;
 
@@ -55,24 +70,19 @@
 
   var init = function(options) {
     var selector = (options || {}).selector || '[href^="#"]';
-    var links = document.querySelectorAll(selector);
 
     window.addEventListener('popstate', function(event) {
       event.preventDefault();
       smoothScrollToSelector(window.location.hash, options);
     });
 
-    var smoothScrollClick = function(event) {
+    delegated(document, 'click', selector, function(event, target) {
       event.preventDefault();
 
-      var selector = event.currentTarget.getAttribute('href');
+      var selector = target.getAttribute('href');
       history.pushState(null, null, selector);
       smoothScrollToSelector(selector, options);
-    };
-
-    for (var i = 0; i < links.length; i++) {
-      links[i].addEventListener('click', smoothScrollClick);
-    }
+    });
   };
 
   return {
