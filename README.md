@@ -23,3 +23,31 @@ improve existing solutions instead. This is just my personal scratchpad.
 | project is active                                   |  ~  |  ~  | yes | yes | no  | no  | yes | yes | no  |
 | supports containers other than full page            | no  | no  | no  | no  | no  | no  |  ?  | yes | no  |
 | change direction mid-scroll                         |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |  ?  |
+
+# Usage
+
+## init(options)
+
+Register click handlers for all elements matching `options.selector`.
+Options are:
+
+-   `selector` (string) - defaults to `[href^="#"]`
+-   `headerSelector` (string) - defaults to `[data-scroll-header]`
+-   `duration` (number) - defaults to 400
+-   `easing` (function) - defaults to `cubicInOut()`
+
+If the file is included directly (i.e. not via commonjs or amd module systems)
+this function is **called automatically**.
+
+## smoothScrollToSelector(selector, options)
+
+Scroll to the first element matching `selector`.
+
+## smoothScrollTo(endX, endY, options)
+
+Low-level function that scrolls to the given position. The header is ignored.
+
+## animate(apply, duration)
+
+Low-level function that calls `apply(progress)` on each animation frame.
+`progress` is a number between 0 and 1.
