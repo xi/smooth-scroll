@@ -1,0 +1,21 @@
+{
+  "name": "smooth-scroll",
+  "version": "1.0.0",
+  "description": "simple smooth scrolling in the browser",
+  "main": "smooth-scroll.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xi/smooth-scroll.git"
+  },
+  "keywords": [
+    "smmoth",
+    "scroll",
+    "browser"
+  ],
+  "author": "Tobias Bengfort <tobias.bengfort@posteo.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xi/smooth-scroll/issues"
+  },
+  "homepage": "https://github.com/xi/smooth-scroll#readme"
+}
