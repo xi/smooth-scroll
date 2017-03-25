@@ -9,6 +9,8 @@
     window.smoothScroll.init();
   }
 })(function() {
+  'use strict';
+
   var animate = function(apply, duration) {
     var start = null;
 
