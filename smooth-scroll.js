@@ -11,15 +11,28 @@
 })(function() {
   'use strict';
 
-  var closestMatch = function(el, selector, root) {
-    if (el && el !== root) {
-      return el.matches(selector) ? el : closestMatch(el.parentElement, selector, root);
-    }
-  };
+  Element.prototype.closest =
+    Element.prototype.closest ||
+    function(selector) {
+      var matches = document.querySelectorAll(selector);
+
+      var fn = function(el) {
+        if (el) {
+          for (var i = 0; i < matches.length; i++) {
+            if (matches[i] === el) {
+              return el;
+            }
+          }
+          return fn(el.parentElement);
+        }
+      };
+
+      return fn(this);
+    };
 
   var delegated = function(element, eventType, selector, handler) {
     element.addEventListener(eventType, function(event) {
-      var target = closestMatch(event.target, selector, element);
+      var target = event.target.closest(selector);
       if (target) {
         handler(event, target);
       }
