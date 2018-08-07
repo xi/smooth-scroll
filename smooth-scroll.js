@@ -11,22 +11,24 @@
 })(function() {
   'use strict';
 
-  var delegated = function(element, eventType, selector, handler) {
+  var on = function(element, eventType, selector, fn) {
     element.addEventListener(eventType, function(event) {
       var target = event.target.closest(selector);
-      if (target) {
-        handler(event, target);
+      if (target && element.contains(target)) {
+        handler.call(target, event);
       }
     });
   };
 
-  var animate = function(apply, duration) {
+  var animate = function(fn, duration) {
     var start = null;
 
     var step = function(timestamp) {
-      if (!start) start = timestamp;
+      if (!start) {
+        start = timestamp;
+      }
       var progress = Math.min(1, (timestamp - start) / duration);
-      apply(progress);
+      fn(progress);
       if (progress < 1) {
         window.requestAnimationFrame(step);
       }
@@ -58,22 +60,23 @@
     var headerSelector = (options || {}).headerSelector || '[data-scroll-header]';
     var header = document.querySelector(headerSelector);
     var scrollY = document.querySelector(selector).offsetTop;
-    if (header) scrollY -= header.getBoundingClientRect().height;
+    if (header) {
+      scrollY -= header.getBoundingClientRect().height;
+    }
     smoothScrollTo(null, scrollY, options);
   };
 
   var init = function(options) {
-    var selector = (options || {}).selector || '[href^="#"]';
-
     window.addEventListener('popstate', function(event) {
       event.preventDefault();
       smoothScrollToSelector(window.location.hash, options);
     });
 
-    delegated(document, 'click', selector, function(event, target) {
+    var selector = (options || {}).selector || '[href^="#"]';
+    on(document, 'click', selector, function(event) {
       event.preventDefault();
 
-      var selector = target.getAttribute('href');
+      var selector = this.getAttribute('href');
       history.pushState(null, null, selector);
       smoothScrollToSelector(selector, options);
     });
